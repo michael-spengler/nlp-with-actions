@@ -1,0 +1,43 @@
+{
+  "name": "nlp-with-actions",
+  "version": "1.0.0",
+  "description": "This package combines Natural Language Processing with User Action Processing",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "tslint": "tslint -p ./",
+    "build-and-publish": "tsc && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tbd"
+  },
+  "keywords": [
+    "Natural",
+    "Language",
+    "Processing;",
+    "User",
+    "Action",
+    "Processing"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run tslint && npm run test"
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.12",
+    "husky": "^1.3.1",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.2"
+  },
+  "author": "Michael Spengler leveraging also the public npm work of others",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "node-nlp": "^2.3.1"
+  }
+}
