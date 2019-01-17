@@ -23,12 +23,4 @@ describe("Processor", () => {
                 text: "hey man",
             })
     })
-
 })
-
-// Test("basic processing", async () => {
-//     Const processor: Processor = new Processor()
-//     Await processor.learn()
-//     Expect(await processor.process("hi"))
-//         .toEqual({ "actions": [], "text": "hi" })
-// })

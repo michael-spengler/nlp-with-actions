@@ -32,7 +32,7 @@ class Processor {
     }
     process(input) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.successfullyTrained === false) {
+            if (!this.successfullyTrained) {
                 throw new Error("Please call learn() before processing.");
             }
             let answer = this.getDirectMatchResponse(input);
