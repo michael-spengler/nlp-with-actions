@@ -1,5 +1,5 @@
 
-import { ISpenglerAnswer, ISpenglersNLPMapEntry as ISpenglersNLPMapEntry } from "./types"
+import { IAnswer, ISpenglersNLPMapEntry as ISpenglersNLPMapEntry } from "./types"
 const { NlpManager } =
     // tslint:disable-next-line:no-require-imports
     require("node-nlp")
@@ -18,7 +18,7 @@ export class Processor {
                 this.manager.addDocument(entry.language, utterance, entry.intent)
             })
 
-            entry.answers.forEach((answer: ISpenglerAnswer) => {
+            entry.answers.forEach((answer: IAnswer) => {
                 this.manager.addAnswer(entry.language, entry.intent, answer.text)
             })
         })
@@ -29,12 +29,12 @@ export class Processor {
         this.successfullyTrained = true
     }
 
-    public async process(input: string): Promise<ISpenglerAnswer> {
+    public async process(input: string): Promise<IAnswer> {
         if (!this.successfullyTrained) {
             throw new Error("Please call learn() before processing.")
         }
 
-        let answer: ISpenglerAnswer = this.getDirectMatchResponse(input)
+        let answer: IAnswer = this.getDirectMatchResponse(input)
         if (answer === undefined) {
             answer = await this.getAdvancedNLPResponse(input)
         }
@@ -42,7 +42,7 @@ export class Processor {
         return answer
     }
 
-    private async getAdvancedNLPResponse(input: string): Promise<ISpenglerAnswer> {
+    private async getAdvancedNLPResponse(input: string): Promise<IAnswer> {
         const response: any = await this.manager.process("en", input)
 
         return {
@@ -51,8 +51,8 @@ export class Processor {
         }
     }
 
-    private getDirectMatchResponse(input: string): ISpenglerAnswer | undefined {
-        let answer: ISpenglerAnswer
+    private getDirectMatchResponse(input: string): IAnswer | undefined {
+        let answer: IAnswer
         this.map.forEach((nlpMapEntry: ISpenglersNLPMapEntry) => {
             if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
                 answer = nlpMapEntry.answers[0]

@@ -1,8 +1,8 @@
 {
   "name": "nlp-with-actions",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "This package combines Natural Language Processing with User Action Processing",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "tbd"
+    "url": "https://github.com/michael-spengler/nlp-with-actions"
   },
   "keywords": [
     "Natural",
