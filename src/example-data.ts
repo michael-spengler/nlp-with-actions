@@ -11,7 +11,6 @@ export const exampleMap: ISpenglersNLPMapEntry[] = [
         answers: [{ actions: [], text: "hey man" }],
         intent: "greetings.hello",
         language: "en",
-        utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey",
-                     "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyyy how are you"],
+        utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey", "heyyyy how are you"],
     },
 ]

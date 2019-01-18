@@ -1,8 +1,9 @@
 {
   "name": "nlp-with-actions",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "This package combines Natural Language Processing with User Action Processing",
   "main": "./dist/index.js",
+  "typings": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
