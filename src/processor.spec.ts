@@ -1,6 +1,5 @@
 import { exampleMap } from "./example-data"
 import { Processor } from "./processor"
-
 let processor: Processor
 
 describe("Processor", () => {
