@@ -1,10 +1,10 @@
-export interface ISpenglerNLPMapEntry {
+export interface ISpenglersNLPMapEntry {
     intent: string;
     language: string;
     utterances: string[];
-    answers: ISpenglerAnswer[];
+    answers: IAnswer[];
 }
-export interface ISpenglerAnswer {
+export interface IAnswer {
     text: string;
     actions: string[];
 }

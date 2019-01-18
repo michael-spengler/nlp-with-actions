@@ -15,4 +15,3 @@ exports.exampleMap = [
             "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyyy how are you"],
     },
 ];
-//# sourceMappingURL=example-data.js.map

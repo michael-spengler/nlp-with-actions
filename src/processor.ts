@@ -7,7 +7,7 @@ const { NlpManager } =
 export class Processor {
 
     private successfullyTrained: boolean = false
-    private map: ISpenglersNLPMapEntry[]
+    private map: ISpenglersNLPMapEntry[] | undefined
     private readonly manager: any = new NlpManager({ languages: ["en"] })
 
     public async learn(map: ISpenglersNLPMapEntry[]): Promise<void> {
@@ -34,7 +34,7 @@ export class Processor {
             throw new Error("Please call learn() before processing.")
         }
 
-        let answer: IAnswer = this.getDirectMatchResponse(input)
+        let answer: IAnswer | undefined = this.getDirectMatchResponse(input)
         if (answer === undefined) {
             answer = await this.getAdvancedNLPResponse(input)
         }
@@ -52,13 +52,16 @@ export class Processor {
     }
 
     private getDirectMatchResponse(input: string): IAnswer | undefined {
-        let answer: IAnswer
-        this.map.forEach((nlpMapEntry: ISpenglersNLPMapEntry) => {
-            if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
-                answer = nlpMapEntry.answers[0]
-            }
-        })
+        let answer: IAnswer | undefined
+        if (this.map !== undefined) {
 
-        return answer
+            this.map.forEach((nlpMapEntry: ISpenglersNLPMapEntry) => {
+                if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
+                    answer = nlpMapEntry.answers[0]
+                }
+            })
+
+            return answer
+        }
     }
 }

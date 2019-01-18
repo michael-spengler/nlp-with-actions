@@ -5,4 +5,3 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./processor"));
 __export(require("./example-data"));
-//# sourceMappingURL=index.js.map

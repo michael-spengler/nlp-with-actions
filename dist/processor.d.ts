@@ -1,4 +1,10 @@
+import { IAnswer, ISpenglersNLPMapEntry as ISpenglersNLPMapEntry } from "./types";
 export declare class Processor {
-    learn(): void;
-    process(): string;
+    private successfullyTrained;
+    private map;
+    private readonly manager;
+    learn(map: ISpenglersNLPMapEntry[]): Promise<void>;
+    process(input: string): Promise<IAnswer>;
+    private getAdvancedNLPResponse(input);
+    private getDirectMatchResponse(input);
 }
