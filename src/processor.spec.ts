@@ -8,11 +8,12 @@ describe("Processor", () => {
     beforeEach(async () => {
         processor = new Processor()
     })
+
     it("processes direct match", async () => {
         await processor.learn(exampleMap)
         expect(await processor.process("hi"))
             .toEqual({
-                actions: ["I like your response", "I do not like your response"],
+                actions: ["thumbs up", "thumbs down"],
                 text: "hey man",
             })
     })
@@ -21,7 +22,7 @@ describe("Processor", () => {
         await processor.learn(exampleMap)
         expect(await processor.process("how are you"))
             .toEqual({
-                actions: ["I like your response", "I do not like your response"],
+                actions: ["thumbs up", "thumbs down"],
                 text: "hey man",
             })
     })
@@ -29,7 +30,7 @@ describe("Processor", () => {
     it("adds intents and processes accordingly", async () => {
         const additionalIntent: ISpenglersIntent = {
             answers: [{
-                actions: ["Thanks", "I have an improvement proposal"],
+                actions: ["Thanks", "thumbs down"],
                 text: "Here is the data you asked me for:",
             }],
             intent: "provide-currency-exchange-rates",
@@ -41,8 +42,30 @@ describe("Processor", () => {
         await processor.learn(map)
         expect(await processor.process("exchange rates"))
             .toEqual({
-                actions: ["Thanks", "I have an improvement proposal"],
+                actions: ["Thanks", "thumbs down"],
                 text: "Here is the data you asked me for:",
             })
+    })
+
+    it("rejects inconsistent training data", async () => {
+        const intentContainingAnswerWithUnknownAction: ISpenglersIntent = {
+            answers: [{
+                actions: ["unknownAction"],
+                text: "42",
+            }],
+            intent: "answer-contains-unknown-action",
+            language: "en",
+            utterances: ["42"],
+        }
+        const map: ISpenglersIntent[] = exampleMap
+        map.push(intentContainingAnswerWithUnknownAction)
+        try {
+            await processor.learn(map)
+
+            fail("please let me think about it")
+
+        } catch (error) {
+            // Works as defined
+        }
     })
 })

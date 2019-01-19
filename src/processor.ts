@@ -13,16 +13,22 @@ export class Processor {
 
     public async learn(map: ISpenglersIntent[]): Promise<void> {
         this.map = map
-        map.forEach((entry: ISpenglersIntent) => {
 
-            entry.utterances.forEach((utterance: string) => {
-                this.manager.addDocument(entry.language, utterance, entry.intent)
-            })
+        if (this.validateTrainingData().length > 0) {
+            throw new Error(`Errors while validating training data: \n${this.validateTrainingData()}`)
+        } else {
 
-            entry.answers.forEach((answer: IAnswer) => {
-                this.manager.addAnswer(entry.language, entry.intent, answer.text)
+            map.forEach((entry: ISpenglersIntent) => {
+
+                entry.utterances.forEach((utterance: string) => {
+                    this.manager.addDocument(entry.language, utterance, entry.intent)
+                })
+
+                entry.answers.forEach((answer: IAnswer) => {
+                    this.manager.addAnswer(entry.language, entry.intent, answer.text)
+                })
             })
-        })
+        }
 
         await this.manager.train()
         await this.manager.save()
@@ -41,6 +47,35 @@ export class Processor {
         }
 
         return answer
+    }
+
+    private validateTrainingData(): string[] {
+
+        const errors: string[] = []
+        const utterances: string[] = []
+        const actions: string[] = []
+
+        this.map.forEach((intent: ISpenglersIntent) => {
+            intent.answers.forEach((answer: IAnswer) => {
+                answer.actions.forEach((action: string) => {
+                    actions.push(action)
+                })
+            })
+        })
+
+        this.map.forEach((intent: ISpenglersIntent) => {
+            intent.utterances.forEach((utterance: string) => {
+                utterances.push(utterance)
+            })
+        })
+
+        actions.forEach((action: string) => {
+            if (!utterances.some((utterance: string) => utterance === action)) {
+                errors.push(`Could not find an utterance for action: ${action}`)
+            }
+        })
+
+        return errors
     }
 
     private getActionsByAnswer(answer: string): string[] {

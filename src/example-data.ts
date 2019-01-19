@@ -18,11 +18,31 @@ export const exampleMap: ISpenglersIntent[] = [
     {
         answers: [
             {
-                actions: ["I like your response", "I do not like your response"],
+                actions: ["thumbs up", "thumbs down"],
                 text: "hey man",
             }],
         intent: "greetings.hello",
         language: "en",
         utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey", "heyyyy how are you"],
+    },
+    {
+        answers: [
+            {
+                actions: [],
+                text: "You're welcome",
+            }],
+        intent: "say.thanks",
+        language: "en",
+        utterances: ["Thanks", "thumbs up"],
+    },
+    {
+        answers: [
+            {
+                actions: [],
+                text: "Which answer would you like better?",
+            }],
+        intent: "improve",
+        language: "en",
+        utterances: ["thumbs down"],
     },
 ]

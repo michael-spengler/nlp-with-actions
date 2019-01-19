@@ -11,24 +11,24 @@ describe("Processor", () => {
         await processor.learn(example_data_1.exampleMap);
         expect(await processor.process("hi"))
             .toEqual({
-            actions: ["I like your response", "I do not like your response"],
-            text: "hey man",
-        });
+                actions: ["I like your response", "I do not like your response"],
+                text: "hey man",
+            });
     });
     it("processes advanced shit", async () => {
         await processor.learn(example_data_1.exampleMap);
         expect(await processor.process("how are you"))
             .toEqual({
-            actions: ["I like your response", "I do not like your response"],
-            text: "hey man",
-        });
+                actions: ["I like your response", "I do not like your response"],
+                text: "hey man",
+            });
     });
     it("adds intents and processes accordingly", async () => {
         const additionalIntent = {
             answers: [{
-                    actions: ["Thanks", "I have an improvement proposal"],
-                    text: "Here is the data you asked me for:",
-                }],
+                actions: ["Thanks", "thumbs down"],
+                text: "Here is the data you asked me for:",
+            }],
             intent: "provide-currency-exchange-rates",
             language: "en",
             utterances: ["provide exchange rates", "currency exchange rates", "rates"],
@@ -38,8 +38,8 @@ describe("Processor", () => {
         await processor.learn(map);
         expect(await processor.process("exchange rates"))
             .toEqual({
-            actions: ["Thanks", "I have an improvement proposal"],
-            text: "Here is the data you asked me for:",
-        });
+                actions: ["Thanks", "thumbs down"],
+                text: "Here is the data you asked me for:",
+            });
     });
 });
