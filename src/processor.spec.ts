@@ -1,6 +1,6 @@
 import { exampleMap } from "./example-data"
 import { Processor } from "./processor"
-import { ISpenglersIntent as ISpenglersIntent } from "./types"
+import { IAnswerExtended, ISpenglersIntent as ISpenglersIntent } from "./types"
 
 let processor: Processor
 
@@ -45,6 +45,19 @@ describe("Processor", () => {
                 actions: ["Thanks", "thumbs down"],
                 text: "Here is the data you asked me for:",
             })
+    })
+
+    it("processes and delivers details", async () => {
+        await processor.learn(exampleMap)
+        const details: IAnswerExtended = await processor.processAndDeliverDetails("Hi. I'm 25.")
+        expect(details.text)
+            .toBe("hey man")
+
+        expect(details.actions)
+            .toEqual(["thumbs up", "thumbs down"])
+
+        expect(details.details)
+            .toBeDefined()
     })
 
     it("rejects inconsistent training data", async () => {

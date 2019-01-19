@@ -1,6 +1,6 @@
 {
   "name": "nlp-with-actions",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "This package combines Natural Language Processing with User Action Processing",
   "main": "./dist/index.js",
   "typings": "./dist/index.js",

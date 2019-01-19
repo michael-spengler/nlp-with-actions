@@ -1,5 +1,5 @@
 
-import { IAnswer, ISpenglersIntent } from "./types"
+import { IAnswer, IAnswerExtended, ISpenglersIntent } from "./types"
 
 const { NlpManager } =
     // tslint:disable-next-line:no-require-imports
@@ -38,13 +38,23 @@ export class Processor {
 
     public async process(input: string): Promise<IAnswer> {
         if (!this.successfullyTrained) {
-            throw new Error("Please call learn() before processing.")
+            throw new Error("Please call learn(withConsistentTrainingData) before processing.")
         }
 
         let answer: IAnswer | undefined = this.getDirectMatchResponse(input)
         if (answer === undefined) {
             answer = await this.getAdvancedNLPResponse(input)
         }
+
+        return answer
+    }
+
+    public async processAndDeliverDetails(input: string): Promise<IAnswerExtended> {
+        if (!this.successfullyTrained) {
+            throw new Error("Please call learn(withConsistentTrainingData) before processing.")
+        }
+
+        const answer: any = await this.getAdvancedNLPResponseWithDetails(input)
 
         return answer
     }
@@ -99,6 +109,16 @@ export class Processor {
 
         return {
             actions: this.getActionsByAnswer(response.answer),
+            text: response.answer,
+        }
+    }
+    private async getAdvancedNLPResponseWithDetails(input: string): Promise<any> {
+
+        const response: any = await this.manager.process("en", input)
+
+        return {
+            actions: this.getActionsByAnswer(response.answer),
+            details: response,
             text: response.answer,
         }
     }

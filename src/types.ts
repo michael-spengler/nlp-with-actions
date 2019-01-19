@@ -5,6 +5,12 @@ export interface ISpenglersIntent {
     answers: IAnswer[]
 }
 
+export interface IAnswerExtended {
+    text: string
+    actions: string[]
+    details: any
+}
+
 export interface IAnswer {
     text: string
     actions: string[]
