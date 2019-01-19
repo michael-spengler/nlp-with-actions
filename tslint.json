@@ -25,6 +25,7 @@
         "no-inferrable-types": false,
         "no-unsafe-any": false,
         "no-var-requires": false,
+        "comment-format": false,
         "no-any": false,
         "file-name-casing": [
             true,

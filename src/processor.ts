@@ -1,5 +1,6 @@
 
-import { IAnswer, ISpenglersNLPMapEntry as ISpenglersNLPMapEntry } from "./types"
+import { IAnswer, ISpenglersIntent } from "./types"
+
 const { NlpManager } =
     // tslint:disable-next-line:no-require-imports
     require("node-nlp")
@@ -7,12 +8,12 @@ const { NlpManager } =
 export class Processor {
 
     private successfullyTrained: boolean = false
-    private map: ISpenglersNLPMapEntry[] | undefined
+    private map: ISpenglersIntent[] = []
     private readonly manager: any = new NlpManager({ languages: ["en"] })
 
-    public async learn(map: ISpenglersNLPMapEntry[]): Promise<void> {
+    public async learn(map: ISpenglersIntent[]): Promise<void> {
         this.map = map
-        map.forEach((entry: ISpenglersNLPMapEntry) => {
+        map.forEach((entry: ISpenglersIntent) => {
 
             entry.utterances.forEach((utterance: string) => {
                 this.manager.addDocument(entry.language, utterance, entry.intent)
@@ -42,26 +43,40 @@ export class Processor {
         return answer
     }
 
+    private getActionsByAnswer(answer: string): string[] {
+
+        let actions: string[] = []
+
+        this.map.forEach((entry: ISpenglersIntent) => {
+            const foundAnswers: IAnswer[] = entry.answers.filter((element: IAnswer) => answer === element.text)
+
+            if (foundAnswers.length === 1) {
+                actions = foundAnswers[0].actions
+            }
+        })
+
+        return actions
+    }
+
     private async getAdvancedNLPResponse(input: string): Promise<IAnswer> {
+
         const response: any = await this.manager.process("en", input)
 
         return {
-            actions: [],
+            actions: this.getActionsByAnswer(response.answer),
             text: response.answer,
         }
     }
 
     private getDirectMatchResponse(input: string): IAnswer | undefined {
         let answer: IAnswer | undefined
-        if (this.map !== undefined) {
 
-            this.map.forEach((nlpMapEntry: ISpenglersNLPMapEntry) => {
-                if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
-                    answer = nlpMapEntry.answers[0]
-                }
-            })
+        this.map.forEach((nlpMapEntry: ISpenglersIntent) => {
+            if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
+                answer = nlpMapEntry.answers[0]
+            }
+        })
 
-            return answer
-        }
+        return answer
     }
 }
