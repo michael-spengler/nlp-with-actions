@@ -24,6 +24,7 @@ To explore example data check the **"example-data.ts"** file in the **src** fold
     // see also above
 
     // retrieving details including e.g. results of entity extraction
-    const details: IAnswerExtended = await processor.processAndDeliverDetails("Hi. I'm 25.")
+    const details: IAnswerExtended = 
+        await processor.processAndDeliverDetails("Hi. I'm 25.")
     
     console.log(JSON.stringify(answer))
