@@ -6,6 +6,7 @@ require("node-nlp");
 class Processor {
     constructor() {
         this.successfullyTrained = false;
+        this.map = [];
         this.manager = new NlpManager({ languages: ["en"] });
     }
     async learn(map) {
@@ -32,23 +33,31 @@ class Processor {
         }
         return answer;
     }
+    getActionsByAnswer(answer) {
+        let actions = [];
+        this.map.forEach((entry) => {
+            const foundAnswers = entry.answers.filter((element) => answer === element.text);
+            if (foundAnswers.length === 1) {
+                actions = foundAnswers[0].actions;
+            }
+        });
+        return actions;
+    }
     async getAdvancedNLPResponse(input) {
         const response = await this.manager.process("en", input);
         return {
-            actions: [],
+            actions: this.getActionsByAnswer(response.answer),
             text: response.answer,
         };
     }
     getDirectMatchResponse(input) {
         let answer;
-        if (this.map !== undefined) {
-            this.map.forEach((nlpMapEntry) => {
-                if (nlpMapEntry.utterances.some((utterance) => utterance === input)) {
-                    answer = nlpMapEntry.answers[0];
-                }
-            });
-            return answer;
-        }
+        this.map.forEach((nlpMapEntry) => {
+            if (nlpMapEntry.utterances.some((utterance) => utterance === input)) {
+                answer = nlpMapEntry.answers[0];
+            }
+        });
+        return answer;
     }
 }
 exports.Processor = Processor;

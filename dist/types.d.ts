@@ -1,4 +1,4 @@
-export interface ISpenglersNLPMapEntry {
+export interface ISpenglersIntent {
     intent: string;
     language: string;
     utterances: string[];

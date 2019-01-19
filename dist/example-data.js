@@ -2,16 +2,29 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.exampleMap = [
     {
-        answers: [{ actions: [], text: "Till next time" }, { actions: [], text: "see you soon!" }],
+        answers: [
+            {
+                actions: ["thumbs up", "thumbs down"],
+                text: "Till next time",
+            },
+            {
+                actions: [],
+                text: "see you soon!",
+            }
+        ],
         intent: "greetings.bye",
         language: "en",
-        utterances: ["goodbye for now", "bye bye take care", "cu"],
+        utterances: ["goodbye for now", "bye bye take care", "cu", "bye"],
     },
     {
-        answers: [{ actions: [], text: "hey man" }],
+        answers: [
+            {
+                actions: ["I like your response", "I do not like your response"],
+                text: "hey man",
+            }
+        ],
         intent: "greetings.hello",
         language: "en",
-        utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey",
-            "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyy", "heyyyy how are you"],
+        utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey", "heyyyy how are you"],
     },
 ];

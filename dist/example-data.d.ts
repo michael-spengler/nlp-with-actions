@@ -1,2 +1,2 @@
-import { ISpenglersNLPMapEntry } from "./types";
-export declare const exampleMap: ISpenglersNLPMapEntry[];
+import { ISpenglersIntent } from "./types";
+export declare const exampleMap: ISpenglersIntent[];

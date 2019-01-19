@@ -17,6 +17,5 @@ Simply process text
 
 
 # Example Data 
-To explore example data check the   
-file **"example-data.ts"** in the **src** folder of the node module at hand (nlp-with-actions).  
+To explore example data check the **"example-data.ts"** file in the **src** folder of the node module at hand (nlp-with-actions).  
 
