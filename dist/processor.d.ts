@@ -1,12 +1,12 @@
-import { IAnswer, IAnswerExtended, ISpenglersIntent } from "./types";
+import { IIntent } from "nlp-trainer";
+import { IAnswer, IAnswerExtended } from "./types";
 export declare class Processor {
     private successfullyTrained;
-    private map;
+    private intents;
     private readonly manager;
-    learn(map: ISpenglersIntent[]): Promise<void>;
+    learn(intents: IIntent[]): Promise<void>;
     process(input: string): Promise<IAnswer>;
     processAndDeliverDetails(input: string): Promise<IAnswerExtended>;
-    private validateTrainingData();
     private getActionsByAnswer(answer);
     private getAdvancedNLPResponse(input);
     private getAdvancedNLPResponseWithDetails(input);

@@ -1,17 +1,19 @@
-import { IIntent } from "nlp-trainer"
-import { exampleMap } from "./example-data"
+
+import { IIntent, NLPTrainer } from "nlp-trainer"
 import { Processor } from "./processor"
 import { IAnswerExtended } from "./types"
 
 let processor: Processor
+let nlpTrainer: NLPTrainer
 
 describe("Processor", () => {
     beforeEach(async () => {
         processor = new Processor()
+        nlpTrainer = new NLPTrainer()
     })
 
     it("processes direct match", async () => {
-        await processor.learn(exampleMap)
+        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
         expect(await processor.process("hi"))
             .toEqual({
                 actions: ["thumbs up", "thumbs down"],
@@ -20,7 +22,7 @@ describe("Processor", () => {
     })
 
     it("processes advanced shit", async () => {
-        await processor.learn(exampleMap)
+        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
         expect(await processor.process("how are you"))
             .toEqual({
                 actions: ["thumbs up", "thumbs down"],
@@ -38,7 +40,7 @@ describe("Processor", () => {
             name: "provide-currency-exchange-rates",
             utterances: ["provide exchange rates", "currency exchange rates", "rates"],
         }
-        const map: IIntent[] = exampleMap
+        const map: IIntent[] = nlpTrainer.getTrainingMap("exampleMap") as IIntent[]
         map.push(additionalIntent)
         await processor.learn(map)
         expect(await processor.process("exchange rates"))
@@ -49,7 +51,7 @@ describe("Processor", () => {
     })
 
     it("processes and delivers details", async () => {
-        await processor.learn(exampleMap)
+        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
         const details: IAnswerExtended = await processor.processAndDeliverDetails("Hi. I'm 25.")
         expect(details.text)
             .toBe("hey man")
@@ -61,25 +63,4 @@ describe("Processor", () => {
             .toBeDefined()
     })
 
-    it("rejects inconsistent training data", async () => {
-        const intentContainingAnswerWithUnknownAction: IIntent = {
-            answers: [{
-                actions: ["unknownAction"],
-                text: "42",
-            }],
-            language: "en",
-            name: "answer-contains-unknown-action",
-            utterances: ["42"],
-        }
-        const map: IIntent[] = exampleMap
-        map.push(intentContainingAnswerWithUnknownAction)
-        try {
-            await processor.learn(map)
-
-            fail("please let me think about it")
-
-        } catch (error) {
-            // Works as defined
-        }
-    })
 })

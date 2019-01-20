@@ -38,7 +38,7 @@
     "@types/jest": "^21.0.0",
     "@types/node": "^10.12.18",
     "jest": "^23.6.0",
-    "nlp-trainer": "^0.1.2",
+    "nlp-trainer": "~1.0.1",
     "node-nlp": "^2.3.1",
     "ts-jest": "^23.10.5"
   }

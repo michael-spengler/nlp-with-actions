@@ -12,24 +12,19 @@ export class Processor {
     private intents: IIntent[] = []
     private readonly manager: any = new NlpManager({ languages: ["en"] })
 
-    public async learn(map: IIntent[]): Promise<void> {
-        this.intents = map
+    public async learn(intents: IIntent[]): Promise<void> {
+        this.intents = intents
 
-        if (this.validateTrainingData().length > 0) {
-            throw new Error(`Errors while validating training data: \n${this.validateTrainingData()}`)
-        } else {
+        intents.forEach((intent: IIntent) => {
 
-            map.forEach((intent: IIntent) => {
-
-                intent.utterances.forEach((utterance: string) => {
-                    this.manager.addDocument(intent.language, utterance, intent.name)
-                })
-
-                intent.answers.forEach((answer: IAnswer) => {
-                    this.manager.addAnswer(intent.language, intent.name, answer.text)
-                })
+            intent.utterances.forEach((utterance: string) => {
+                this.manager.addDocument(intent.language, utterance, intent.name)
             })
-        }
+
+            intent.answers.forEach((answer: IAnswer) => {
+                this.manager.addAnswer(intent.language, intent.name, answer.text)
+            })
+        })
 
         await this.manager.train()
         await this.manager.save()
@@ -58,35 +53,6 @@ export class Processor {
         const answer: any = await this.getAdvancedNLPResponseWithDetails(input)
 
         return answer
-    }
-
-    private validateTrainingData(): string[] {
-
-        const errors: string[] = []
-        const utterances: string[] = []
-        const actions: string[] = []
-
-        this.intents.forEach((intent: IIntent) => {
-            intent.answers.forEach((answer: IAnswer) => {
-                answer.actions.forEach((action: string) => {
-                    actions.push(action)
-                })
-            })
-        })
-
-        this.intents.forEach((intent: IIntent) => {
-            intent.utterances.forEach((utterance: string) => {
-                utterances.push(utterance)
-            })
-        })
-
-        actions.forEach((action: string) => {
-            if (!utterances.some((utterance: string) => utterance === action)) {
-                errors.push(`Could not find an utterance for action: ${action}`)
-            }
-        })
-
-        return errors
     }
 
     private getActionsByAnswer(answer: string): string[] {

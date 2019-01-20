@@ -6,24 +6,19 @@ require("node-nlp");
 class Processor {
     constructor() {
         this.successfullyTrained = false;
-        this.map = [];
+        this.intents = [];
         this.manager = new NlpManager({ languages: ["en"] });
     }
-    async learn(map) {
-        this.map = map;
-        if (this.validateTrainingData().length > 0) {
-            throw new Error(`Errors while validating training data: \n${this.validateTrainingData()}`);
-        }
-        else {
-            map.forEach((entry) => {
-                entry.utterances.forEach((utterance) => {
-                    this.manager.addDocument(entry.language, utterance, entry.intent);
-                });
-                entry.answers.forEach((answer) => {
-                    this.manager.addAnswer(entry.language, entry.intent, answer.text);
-                });
+    async learn(intents) {
+        this.intents = intents;
+        intents.forEach((intent) => {
+            intent.utterances.forEach((utterance) => {
+                this.manager.addDocument(intent.language, utterance, intent.name);
             });
-        }
+            intent.answers.forEach((answer) => {
+                this.manager.addAnswer(intent.language, intent.name, answer.text);
+            });
+        });
         await this.manager.train();
         await this.manager.save();
         this.successfullyTrained = true;
@@ -45,32 +40,9 @@ class Processor {
         const answer = await this.getAdvancedNLPResponseWithDetails(input);
         return answer;
     }
-    validateTrainingData() {
-        const errors = [];
-        const utterances = [];
-        const actions = [];
-        this.map.forEach((intent) => {
-            intent.answers.forEach((answer) => {
-                answer.actions.forEach((action) => {
-                    actions.push(action);
-                });
-            });
-        });
-        this.map.forEach((intent) => {
-            intent.utterances.forEach((utterance) => {
-                utterances.push(utterance);
-            });
-        });
-        actions.forEach((action) => {
-            if (!utterances.some((utterance) => utterance === action)) {
-                errors.push(`Could not find an utterance for action: ${action}`);
-            }
-        });
-        return errors;
-    }
     getActionsByAnswer(answer) {
         let actions = [];
-        this.map.forEach((entry) => {
+        this.intents.forEach((entry) => {
             const foundAnswers = entry.answers.filter((element) => answer === element.text);
             if (foundAnswers.length === 1) {
                 actions = foundAnswers[0].actions;
@@ -95,7 +67,7 @@ class Processor {
     }
     getDirectMatchResponse(input) {
         let answer;
-        this.map.forEach((nlpMapEntry) => {
+        this.intents.forEach((nlpMapEntry) => {
             if (nlpMapEntry.utterances.some((utterance) => utterance === input)) {
                 answer = nlpMapEntry.answers[0];
             }
