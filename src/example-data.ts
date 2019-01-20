@@ -1,6 +1,6 @@
-import { ISpenglersIntent } from "./types"
+import { IIntent } from "nlp-trainer"
 
-export const exampleMap: ISpenglersIntent[] = [
+export const exampleMap: IIntent[] = [
     {
         answers: [
             {
@@ -11,8 +11,8 @@ export const exampleMap: ISpenglersIntent[] = [
                 actions: [],
                 text: "see you soon!",
             }],
-        intent: "greetings.bye",
         language: "en",
+        name: "greetings.bye",
         utterances: ["goodbye for now", "bye bye take care", "cu", "bye"],
     },
     {
@@ -21,8 +21,8 @@ export const exampleMap: ISpenglersIntent[] = [
                 actions: ["thumbs up", "thumbs down"],
                 text: "hey man",
             }],
-        intent: "greetings.hello",
         language: "en",
+        name: "greetings.hello",
         utterances: ["hello how are you", "hi", "hey", "he", "hihi", "hihihi", "heyhey", "heyyyy how are you"],
     },
     {
@@ -31,8 +31,8 @@ export const exampleMap: ISpenglersIntent[] = [
                 actions: [],
                 text: "You're welcome",
             }],
-        intent: "say.thanks",
         language: "en",
+        name: "say.thanks",
         utterances: ["Thanks", "thumbs up"],
     },
     {
@@ -41,8 +41,8 @@ export const exampleMap: ISpenglersIntent[] = [
                 actions: [],
                 text: "Which answer would you like better?",
             }],
-        intent: "improve",
         language: "en",
+        name: "improve",
         utterances: ["thumbs down"],
     },
 ]

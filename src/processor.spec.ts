@@ -1,6 +1,7 @@
+import { IIntent } from "nlp-trainer"
 import { exampleMap } from "./example-data"
 import { Processor } from "./processor"
-import { IAnswerExtended, ISpenglersIntent as ISpenglersIntent } from "./types"
+import { IAnswerExtended } from "./types"
 
 let processor: Processor
 
@@ -28,16 +29,16 @@ describe("Processor", () => {
     })
 
     it("adds intents and processes accordingly", async () => {
-        const additionalIntent: ISpenglersIntent = {
+        const additionalIntent: IIntent = {
             answers: [{
                 actions: ["Thanks", "thumbs down"],
                 text: "Here is the data you asked me for:",
             }],
-            intent: "provide-currency-exchange-rates",
             language: "en",
+            name: "provide-currency-exchange-rates",
             utterances: ["provide exchange rates", "currency exchange rates", "rates"],
         }
-        const map: ISpenglersIntent[] = exampleMap
+        const map: IIntent[] = exampleMap
         map.push(additionalIntent)
         await processor.learn(map)
         expect(await processor.process("exchange rates"))
@@ -61,16 +62,16 @@ describe("Processor", () => {
     })
 
     it("rejects inconsistent training data", async () => {
-        const intentContainingAnswerWithUnknownAction: ISpenglersIntent = {
+        const intentContainingAnswerWithUnknownAction: IIntent = {
             answers: [{
                 actions: ["unknownAction"],
                 text: "42",
             }],
-            intent: "answer-contains-unknown-action",
             language: "en",
+            name: "answer-contains-unknown-action",
             utterances: ["42"],
         }
-        const map: ISpenglersIntent[] = exampleMap
+        const map: IIntent[] = exampleMap
         map.push(intentContainingAnswerWithUnknownAction)
         try {
             await processor.learn(map)

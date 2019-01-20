@@ -1,6 +1,6 @@
 {
   "name": "nlp-with-actions",
-  "version": "2.2.3",
+  "version": "3.0.0",
   "description": "This package combines Natural Language Processing with User Action Processing",
   "main": "./dist/index.js",
   "typings": "./dist/index.js",
@@ -35,10 +35,11 @@
   "author": "Michael Spengler leveraging also the public npm work of others",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^10.12.18",
-    "node-nlp": "^2.3.1",
     "@types/jest": "^21.0.0",
+    "@types/node": "^10.12.18",
     "jest": "^23.6.0",
+    "nlp-trainer": "^0.1.2",
+    "node-nlp": "^2.3.1",
     "ts-jest": "^23.10.5"
   }
 }

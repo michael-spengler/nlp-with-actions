@@ -1,5 +1,6 @@
 
-import { IAnswer, IAnswerExtended, ISpenglersIntent } from "./types"
+import { IIntent } from "nlp-trainer"
+import { IAnswer, IAnswerExtended } from "./types"
 
 const { NlpManager } =
     // tslint:disable-next-line:no-require-imports
@@ -8,24 +9,24 @@ const { NlpManager } =
 export class Processor {
 
     private successfullyTrained: boolean = false
-    private map: ISpenglersIntent[] = []
+    private intents: IIntent[] = []
     private readonly manager: any = new NlpManager({ languages: ["en"] })
 
-    public async learn(map: ISpenglersIntent[]): Promise<void> {
-        this.map = map
+    public async learn(map: IIntent[]): Promise<void> {
+        this.intents = map
 
         if (this.validateTrainingData().length > 0) {
             throw new Error(`Errors while validating training data: \n${this.validateTrainingData()}`)
         } else {
 
-            map.forEach((entry: ISpenglersIntent) => {
+            map.forEach((intent: IIntent) => {
 
-                entry.utterances.forEach((utterance: string) => {
-                    this.manager.addDocument(entry.language, utterance, entry.intent)
+                intent.utterances.forEach((utterance: string) => {
+                    this.manager.addDocument(intent.language, utterance, intent.name)
                 })
 
-                entry.answers.forEach((answer: IAnswer) => {
-                    this.manager.addAnswer(entry.language, entry.intent, answer.text)
+                intent.answers.forEach((answer: IAnswer) => {
+                    this.manager.addAnswer(intent.language, intent.name, answer.text)
                 })
             })
         }
@@ -65,7 +66,7 @@ export class Processor {
         const utterances: string[] = []
         const actions: string[] = []
 
-        this.map.forEach((intent: ISpenglersIntent) => {
+        this.intents.forEach((intent: IIntent) => {
             intent.answers.forEach((answer: IAnswer) => {
                 answer.actions.forEach((action: string) => {
                     actions.push(action)
@@ -73,7 +74,7 @@ export class Processor {
             })
         })
 
-        this.map.forEach((intent: ISpenglersIntent) => {
+        this.intents.forEach((intent: IIntent) => {
             intent.utterances.forEach((utterance: string) => {
                 utterances.push(utterance)
             })
@@ -92,7 +93,7 @@ export class Processor {
 
         let actions: string[] = []
 
-        this.map.forEach((entry: ISpenglersIntent) => {
+        this.intents.forEach((entry: IIntent) => {
             const foundAnswers: IAnswer[] = entry.answers.filter((element: IAnswer) => answer === element.text)
 
             if (foundAnswers.length === 1) {
@@ -112,6 +113,7 @@ export class Processor {
             text: response.answer,
         }
     }
+
     private async getAdvancedNLPResponseWithDetails(input: string): Promise<any> {
 
         const response: any = await this.manager.process("en", input)
@@ -126,7 +128,7 @@ export class Processor {
     private getDirectMatchResponse(input: string): IAnswer | undefined {
         let answer: IAnswer | undefined
 
-        this.map.forEach((nlpMapEntry: ISpenglersIntent) => {
+        this.intents.forEach((nlpMapEntry: IIntent) => {
             if (nlpMapEntry.utterances.some((utterance: string) => utterance === input)) {
                 answer = nlpMapEntry.answers[0]
             }
