@@ -1,15 +1,20 @@
 # Natural Language Processing With Actions
 
-Simply process text
+Simply process text  
+
+Leveraging the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package
 
 ----  
 # Basic Usage Example
-    import { Processor, exampleMap, IAnswer } from "nlp-with-actions"
-    
+    import { Processor } from "nlp-with-actions"
+    import { IIntent, NLPTrainer } from "nlp-trainer"
+
     const processor: Processor = new Processor()
-    
-    // you can replace exampleMap with your own data
-    await processor.learn(exampleMap) 
+    const nlpTrainer: NLPTrainer = new NLPTrainer()
+
+    // you can replace the trainingData with your own data
+    const trainingData: any = await nlpTrainer.getTrainingMap("exampleMap")
+    await processor.learn(trainingData) 
     
     const answer: IAnswer = await processor.process("hi")
     
@@ -17,7 +22,7 @@ Simply process text
 
 
 # Example Data 
-To explore example data check the **"example-data.ts"** file in the **src** folder of the node module at hand (nlp-with-actions).  
+To explore example training data and its structure check https://www.npmjs.com/package/nlp-trainer 
 
 
 # Advanced Usage Example

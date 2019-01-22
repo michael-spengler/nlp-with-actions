@@ -1,6 +1,6 @@
 {
   "name": "nlp-with-actions",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "This package combines Natural Language Processing with User Action Processing",
   "main": "./dist/index.js",
   "typings": "./dist/index.js",
@@ -8,7 +8,7 @@
     "test": "jest",
     "test:cov": "jest --coverage",
     "tslint": "tslint -p ./",
-    "build-and-publish": "tsc && npm publish"
+    "bp": "tsc && npm publish"
   },
   "repository": {
     "type": "git",
