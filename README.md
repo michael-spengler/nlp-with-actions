@@ -7,7 +7,7 @@ Leveraging the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package
 ----  
 # Basic Usage Example
     import { Processor } from "nlp-with-actions"
-    import { IIntent, NLPTrainer } from "nlp-trainer"
+    import { NLPTrainer } from "nlp-trainer"
 
     const processor: Processor = new Processor()
     const nlpTrainer: NLPTrainer = new NLPTrainer()
@@ -22,7 +22,7 @@ Leveraging the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package
 
 
 # Example Data 
-To explore example training data and its structure check https://www.npmjs.com/package/nlp-trainer 
+To explore example training data and its structure check the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package.
 
 
 # Advanced Usage Example
