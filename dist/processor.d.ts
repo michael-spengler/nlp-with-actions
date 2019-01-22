@@ -7,8 +7,8 @@ export declare class Processor {
     learn(intents: IIntent[]): Promise<void>;
     process(input: string): Promise<IAnswer>;
     processAndDeliverDetails(input: string): Promise<IAnswerExtended>;
-    private getActionsByAnswer(answer);
-    private getAdvancedNLPResponse(input);
-    private getAdvancedNLPResponseWithDetails(input);
-    private getDirectMatchResponse(input);
+    private getActionsByAnswer;
+    private getAdvancedNLPResponse;
+    private getAdvancedNLPResponseWithDetails;
+    private getDirectMatchResponse;
 }
