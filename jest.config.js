@@ -1,4 +1,5 @@
 module.exports = {
+    "setupTestFrameworkScriptFile": './jest.setup.js',
     "roots": [
         "<rootDir>/src"
     ],
@@ -14,4 +15,12 @@ module.exports = {
         "json",
         "node"
     ],
+    "coverageThreshold": {
+        "global": {
+            "branches": 100,
+            "functions": 100,
+            "lines": 100,
+            "statements": 100
+        }
+    }
 }

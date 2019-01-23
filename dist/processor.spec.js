@@ -25,6 +25,22 @@ describe("Processor", () => {
             text: "hey man",
         });
     });
+    it("throws an error when not trained properly", async () => {
+        try {
+            await processor.process("how are you");
+            fail("hmm - let me think about it");
+        }
+        catch (error) {
+            // works as designed
+        }
+        try {
+            await processor.processAndDeliverDetails("Hi. I'm 25.");
+            fail("hmm - let me think about it");
+        }
+        catch (error) {
+            // works as designed
+        }
+    });
     it("adds intents and processes accordingly", async () => {
         const additionalIntent = {
             answers: [{

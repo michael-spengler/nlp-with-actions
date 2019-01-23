@@ -2,7 +2,9 @@
 
 Simply process text  
 
-Leveraging the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package
+This package is e.g. used by the [telegram-interaction-builder](https://www.npmjs.com/package/telegram-interaction-builder)
+
+It leverages e.g. the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer)
 
 ----  
 # Basic Usage Example
