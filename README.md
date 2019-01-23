@@ -31,10 +31,10 @@ To explore example training data and its structure check the [nlp-trainer](https
     // see also above
 
     // retrieving details including e.g. results of entity extraction
-    const details: IAnswerExtended = 
+    const detailedAnswer: IAnswerExtended = 
         await processor.processAndDeliverDetails("Hi. I'm 25.")
     
-    console.log(JSON.stringify(answer))
+    console.log(JSON.stringify(detailedAnswer))
 
 ## Feedback
 If you find any issues or want to share improvement proposals in general feel free to open an issue [here](https://github.com/michael-spengler/nlp-with-actions/issues).
