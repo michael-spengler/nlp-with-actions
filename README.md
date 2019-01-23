@@ -7,7 +7,7 @@ This package is e.g. used by the [telegram-interaction-builder](https://www.npmj
 It leverages e.g. the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer)
 
 ----  
-# Basic Usage Example
+## Basic Usage Example
     import { Processor } from "nlp-with-actions"
     import { NLPTrainer } from "nlp-trainer"
 
@@ -23,11 +23,11 @@ It leverages e.g. the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer)
     console.log(answer)
 
 
-# Example Data 
+## Example Data 
 To explore example training data and its structure check the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer) package.
 
 
-# Advanced Usage Example
+## Advanced Usage Example
     // see also above
 
     // retrieving details including e.g. results of entity extraction
@@ -35,3 +35,10 @@ To explore example training data and its structure check the [nlp-trainer](https
         await processor.processAndDeliverDetails("Hi. I'm 25.")
     
     console.log(JSON.stringify(answer))
+
+## Feedback
+If you find any issues or want to share improvement proposals in general feel free to open an issue [here](https://github.com/michael-spengler/nlp-with-actions/issues).
+
+
+## Contribute
+I am interested in save and useful enhancements. Feel free to create [Pull Requests](https://github.com/michael-spengler/nlp-with-actions/pulls) on my Repository.

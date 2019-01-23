@@ -56,7 +56,9 @@ describe("Processor", () => {
             name: "provide-currency-exchange-rates",
             utterances: ["provide exchange rates", "currency exchange rates", "rates"],
         }
+
         const map: IIntent[] = nlpTrainer.getTrainingMap("exampleMap") as IIntent[]
+
         map.push(additionalIntent)
         await processor.learn(map)
         expect(await processor.process("exchange rates"))
