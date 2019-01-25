@@ -1,7 +1,7 @@
 
 import { IIntent, NLPTrainer } from "nlp-trainer"
 import { Processor } from "./processor"
-import { IAnswerExtended } from "./types"
+import { IAnswer, IAnswerExtended } from "./types"
 
 let processor: Processor
 let nlpTrainer: NLPTrainer
@@ -13,7 +13,7 @@ describe("Processor", () => {
     })
 
     it("processes direct match", async () => {
-        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
+        await processor.learn(await nlpTrainer.getIntents("exampleMap"))
         expect(await processor.process("hi"))
             .toEqual({
                 actions: ["thumbs up", "thumbs down"],
@@ -22,7 +22,7 @@ describe("Processor", () => {
     })
 
     it("processes advanced shit", async () => {
-        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
+        await processor.learn(await nlpTrainer.getIntents("exampleMap"))
         expect(await processor.process("how are you"))
             .toEqual({
                 actions: ["thumbs up", "thumbs down"],
@@ -57,11 +57,12 @@ describe("Processor", () => {
             utterances: ["provide exchange rates", "currency exchange rates", "rates"],
         }
 
-        const map: IIntent[] = nlpTrainer.getTrainingMap("exampleMap") as IIntent[]
+        const map: IIntent[] = await nlpTrainer.getIntents("exampleMap")
 
         map.push(additionalIntent)
         await processor.learn(map)
-        expect(await processor.process("exchange rates"))
+        const answer: IAnswer = await processor.process("exchange rates")
+        expect(answer)
             .toEqual({
                 actions: ["Thanks", "thumbs down"],
                 text: "Here is the data you asked me for:",
@@ -69,7 +70,7 @@ describe("Processor", () => {
     })
 
     it("processes and delivers details", async () => {
-        await processor.learn(nlpTrainer.getTrainingMap("exampleMap") as IIntent[])
+        await processor.learn(await nlpTrainer.getIntents("exampleMap"))
         const details: IAnswerExtended = await processor.processAndDeliverDetails("Hi. I'm 25.")
         expect(details.text)
             .toBe("hey man")

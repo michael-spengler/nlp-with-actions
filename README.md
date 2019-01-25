@@ -8,14 +8,14 @@ It leverages e.g. the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer)
 
 ----  
 ## Basic Usage Example
-    import { Processor } from "nlp-with-actions"
+    import { Processor, IAnswer, IAnswerExtended } from "nlp-with-actions"
     import { NLPTrainer } from "nlp-trainer"
 
     const processor: Processor = new Processor()
     const nlpTrainer: NLPTrainer = new NLPTrainer()
 
     // you can replace the trainingData with your own data
-    const trainingData: any = await nlpTrainer.getTrainingMap("exampleMap")
+    const trainingData: any = await nlpTrainer.getIntents("exampleMap")
     await processor.learn(trainingData) 
     
     const answer: IAnswer = await processor.process("hi")
