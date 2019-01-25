@@ -2,7 +2,7 @@
 
 Simply process text  
 
-This package is e.g. used by the [telegram-interaction-builder](https://www.npmjs.com/package/telegram-interaction-builder)
+This package is e.g. used by [homo-digitalis](https://www.npmjs.com/package/homo-digitalis) and by the [telegram-interaction-builder](https://www.npmjs.com/package/telegram-interaction-builder)
 
 It leverages e.g. the [nlp-trainer](https://www.npmjs.com/package/nlp-trainer)
 
